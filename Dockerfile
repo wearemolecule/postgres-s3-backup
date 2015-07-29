@@ -1,4 +1,4 @@
-FROM ubuntu
+FROM ubuntu:wily
 
 # Install basic utility
 RUN apt-get update && \
@@ -6,7 +6,7 @@ RUN apt-get update && \
     ssh
 
 # Install Postgres
- RUN apt-get install -y postgresql-client
+RUN apt-get install -y postgresql-client-9.4
 
 # Install Python for AWS CLI
 RUN apt-get install -y \
@@ -17,3 +17,8 @@ RUN apt-get install -y \
 
 # Install AWS CLI
 RUN pip install awscli
+
+# Add the backup Script to Image
+RUN mkdir /scripts
+ADD /scripts/backup_to_s3.sh /scripts/backup_to_s3.sh
+RUN chmod +x /scripts/backup_to_s3.sh
