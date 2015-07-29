@@ -12,11 +12,8 @@ RUN apt-get update && \
 RUN apt-get install -y \
     python \
     python-pip \
-    python-virtualenv
+    python-virtualenv \
+    groff
 
 # Install AWS CLI
-RUN mkdir aws && \
-    virtualenv aws/env && \
-    ./aws/env/bin/pip install awscli && \
-    echo 'source $HOME/aws/env/bin/activate' >> .bashrc && \
-    echo 'complete -C aws_completer aws' >> .bashrc
+RUN pip install awscli
