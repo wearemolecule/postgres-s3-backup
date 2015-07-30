@@ -22,3 +22,5 @@ RUN pip install awscli
 RUN mkdir /scripts
 ADD /scripts/backup_to_s3.sh /scripts/backup_to_s3.sh
 RUN chmod +x /scripts/backup_to_s3.sh
+
+CMD /scripts/backup_to_s3.sh

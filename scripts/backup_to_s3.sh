@@ -1,8 +1,4 @@
-if [ -z "$1" ]
-  then
-    echo "No value supplied for s3 bucket name"
-    exit -1
-fi
+: ${S3_BUCKET:?"No value supplied for s3 bucket name"}
 
 echo "Checking Credentials before starting backup"
 : ${PGHOST:?"Need to set PGHOST non-empty?"}
@@ -33,14 +29,14 @@ zipped_filename="$PGDATABASE-$now.tar.gz"
 tar -zcvf $zipped_filename  /backup_dump/ && rm -rf /backup_dump/
 echo "Completed Backup"
 
-s3_bucket=$1
-bucket_count=`aws s3 ls s3://$s3_bucket | wc -l`
+bucket_count=`aws s3 ls s3://$S3_BUCKET | wc -l`
 if [[ bucket_count -gt 0 ]]; then
-  echo "${s3_bucket} bucket exists"
+  echo "${S3_BUCKET} bucket exists"
 else
-  echo "${s3_bucket} bucket does not exist"
-  echo "Create s3://${s3_bucket}"
-  aws s3 mb s3://$s3_bucket
+  echo "${S3_BUCKET} bucket does not exist"
+  echo "Create s3://${S3_BUCKET}"
+  aws s3 mb s3://$S3_BUCKET
 fi
 
-aws s3 cp $zipped_filename s3://$s3_bucket/
+aws s3 cp $zipped_filename s3://$S3_BUCKET/
+rm $zipped_filename
