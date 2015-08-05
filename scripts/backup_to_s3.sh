@@ -15,7 +15,7 @@ then
 fi
 
 echo "Starting pgdump"
-pg_dump -j 12 -Fd -f /backup_dump $PGDATABASE
+pg_dump -j 12 -Fd -f $@ /backup_dump $PGDATABASE
 backup_folder=`ls /backup_dump | wc -l`
 if [[ backup_folder -gt 0 ]]; then
   echo "PGDUMP Complete"
