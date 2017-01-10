@@ -1,4 +1,4 @@
-FROM ubuntu:wily
+FROM ubuntu:yakkety
 
 # Install basic utility
 RUN apt-get update && \
@@ -6,7 +6,7 @@ RUN apt-get update && \
     ssh
 
 # Install Postgres
-RUN apt-get install -y postgresql-client-9.4
+RUN apt-get install -y postgresql-client-9.5
 
 # Install Python for AWS CLI
 RUN apt-get install -y \
